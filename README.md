@@ -28,7 +28,7 @@ Heavily inspired by the absolutely awesome [Tinkerwell](https://tinkerwell.app/)
 
 2. Open the [Ray](https://spatie.be/products/ray) desktop app.
 
-3. Run `:TinkerayOpen` or activate the above mentioned mapping to stub out and/or open a blank `tinkeray.php` file in your project when you want to tinker.
+3. Run `:TinkerayOpen` (or activate the above mentioned mapping) to stub out and/or open a blank `tinkeray.php` file in your project when you want to tinker.
 
 4. When you save `tinkeray.php`, you should see your returned output in Ray.
 
@@ -38,9 +38,9 @@ Heavily inspired by the absolutely awesome [Tinkerwell](https://tinkerwell.app/)
 
 - Figure out how to run as async job in Neovim
 
-## Thank You
+## Thank You!
 
 - [Spatie](https://spatie.be/) and [BeyondCode](https://beyondco.de/) for rad tooling!
-- [Jose Soto](https://twitter.com/josecanhelp) for contributions and slick ideas!
+- [Jose Soto](https://twitter.com/josecanhelp) for contributions, slick ideas, and teamwork!
 
 ![](https://media.giphy.com/media/BvsKJXGzqfNPq/giphy.gif)
