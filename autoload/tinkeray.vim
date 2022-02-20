@@ -29,5 +29,5 @@ function! tinkeray#open()
 endfunction
 
 function! tinkeray#create_stub()
-  call writefile(readfile(s:plugin_path . '/stubs/tinkeray.php'), s:app_path . '/tinkeray.php')
+  call writefile(readfile(s:plugin_path . '/bin/stub.php'), s:app_path . '/tinkeray.php')
 endfunction
