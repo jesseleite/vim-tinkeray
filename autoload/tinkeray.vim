@@ -2,7 +2,13 @@
 " # Configurable Settings
 " ------------------------------------------------------------------------------
 
-let g:tinkeray#tinker_command = 'php artisan tinker'
+if exists('g:tinkeray#tinker_command') == 0
+  let g:tinkeray#tinker_command = 'php artisan tinker'
+endif
+
+if exists('g:tinkeray#disable_autocmds') == 0
+  let g:tinkeray#disable_autocmds = 0
+endif
 
 
 " ------------------------------------------------------------------------------
@@ -26,8 +32,20 @@ function! tinkeray#open()
   endif
   exec 'edit tinkeray.php'
   call search("'tinkeray ready'")
+  " call tinkeray#run() " TODO: Only auto run on open when running async
 endfunction
 
 function! tinkeray#create_stub()
   call writefile(readfile(s:plugin_path . '/bin/stub.php'), s:app_path . '/tinkeray.php')
+endfunction
+
+function! tinkeray#register_autocmds()
+  if g:tinkeray#disable_autocmds
+    return
+  endif
+  augroup tinkeray_autocmds
+    autocmd!
+    autocmd BufEnter tinkeray.php :call tinkeray#open()
+    autocmd BufWritePost tinkeray.php :call tinkeray#run()
+  augroup END
 endfunction
