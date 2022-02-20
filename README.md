@@ -26,9 +26,9 @@ Heavily inspired by the absolutely awesome [Tinkerwell](https://tinkerwell.app/)
     composer require spatie/laravel-ray
     ```
 
-2. Open the [Ray](https://spatie.be/products/ray) desktop app.
+2. Run `:TinkerayOpen` (or activate the above mentioned mapping) to stub out and/or open a blank `tinkeray.php` file in your project when you want to tinker.
 
-3. Run `:TinkerayOpen` (or activate the above mentioned mapping) to stub out and/or open a blank `tinkeray.php` file in your project when you want to tinker.
+3. Open the [Ray](https://spatie.be/products/ray) desktop app.
 
 4. When you save `tinkeray.php`, you should see your returned output in Ray.
 
