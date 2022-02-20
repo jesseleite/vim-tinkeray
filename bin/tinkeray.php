@@ -10,7 +10,7 @@ function getReturnFromIncludeOrFail($filename) {
 }
 
 try {
-    ray(getReturnFromIncludeOrFail(getenv('TINKERAY_APP_PATH')));
+    ray(getReturnFromIncludeOrFail(getenv('TINKERAY_APP_PATH') . '/tinkeray.php'));
 } catch (Throwable $t) {
     if ($t instanceof TinkerayOutputException) {
         ray('Warning: No `return` detected in [tinkeray.php]!')->orange();
