@@ -2,6 +2,8 @@
 
 Heavily inspired by the absolutely awesome [Tinkerwell](https://tinkerwell.app/), run Laravel `artisan tinker` from a Vim buffer with output in [Ray](https://spatie.be/products/ray) 🖤
 
+![](example.png)
+
 ## Installation
 
 1. Install using [vim-plug](https://github.com/junegunn/vim-plug) or similar:
