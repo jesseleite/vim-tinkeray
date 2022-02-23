@@ -22,7 +22,7 @@ function removeCommentLines($ast)
     return $traverser->traverse($ast);
 }
 
-function enforceReturnValue($ast)
+function enforceReturn($ast)
 {
     $lastStmt = array_pop($ast);
 
@@ -41,7 +41,7 @@ function enforceReturnValue($ast)
 
 function evaluateTinkerFile($filename)
 {
-    $ast = enforceReturnValue(removeCommentLines(generateAst($filename)));
+    $ast = enforceReturn(removeCommentLines(generateAst($filename)));
     $executionCode = (new PhpParser\PrettyPrinter\Standard())->prettyPrint($ast);
 
     return eval($executionCode);
