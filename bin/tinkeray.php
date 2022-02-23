@@ -3,13 +3,16 @@
 function generateAst($filename)
 {
     $code = file_get_contents($filename);
-    $parser = (new PhpParser\ParserFactory())->create(PhpParser\ParserFactory::PREFER_PHP7);
+
+    $parser = (new PhpParser\ParserFactory)->create(PhpParser\ParserFactory::PREFER_PHP7);
+
     return $parser->parse($code);
 }
 
 function removeCommentLines($ast)
 {
-    $traverser = new PhpParser\NodeTraverser();
+    $traverser = new PhpParser\NodeTraverser;
+
     $traverser->addVisitor(new class () extends PhpParser\NodeVisitorAbstract {
         public function leaveNode(PhpParser\Node $node)
         {
@@ -42,7 +45,7 @@ function enforceReturn($ast)
 function evaluateTinkerFile($filename)
 {
     $ast = enforceReturn(removeCommentLines(generateAst($filename)));
-    $executionCode = (new PhpParser\PrettyPrinter\Standard())->prettyPrint($ast);
+    $executionCode = (new PhpParser\PrettyPrinter\Standard)->prettyPrint($ast);
 
     return eval($executionCode);
 }
