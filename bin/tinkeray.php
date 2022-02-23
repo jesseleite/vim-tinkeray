@@ -1,5 +1,7 @@
 <?php
 
+class TinkerayOutputException extends Exception {}
+
 function generateAst($filename)
 {
     $code = file_get_contents($filename);
@@ -29,6 +31,10 @@ function enforceReturn($ast)
 {
     $lastStmt = array_pop($ast);
 
+    if (! $lastStmt) {
+        throw new TinkerayOutputException;
+    }
+
     switch ($lastStmt->getType()) {
         case 'Stmt_Expression':
             $ast[] = new PhpParser\Node\Stmt\Return_($lastStmt->expr);
@@ -53,7 +59,11 @@ function evaluateTinkerFile($filename)
 try {
     ray(evaluateTinkerFile(getenv('TINKERAY_APP_PATH') . '/tinkeray.php'));
 } catch (Throwable $t) {
-    ray()->exception($t);
+    if ($t instanceof TinkerayOutputException) {
+        ray('Nothing to output in [tinkeray.php]!')->orange();
+    } else {
+        ray()->exception($t);
+    }
 }
 
 exit;
