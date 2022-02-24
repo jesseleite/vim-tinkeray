@@ -39,8 +39,10 @@ function enforceReturn($ast)
         case 'Stmt_Expression':
             $ast[] = new PhpParser\Node\Stmt\Return_($lastStmt->expr);
             break;
-        case 'Stmt_Return':
         case 'Stmt_Echo':
+            $ast[] = new PhpParser\Node\Stmt\Return_($lastStmt->exprs[0]);
+            break;
+        case 'Stmt_Return':
         default:
             $ast[] = $lastStmt;
     }
@@ -56,8 +58,11 @@ function evaluateTinkerFile($filename)
     return eval($executionCode);
 }
 
+// Use explicit app path or fall back to storage/app for Laravel Sail
+$appPath = getenv('TINKERAY_APP_PATH') ?: __DIR__ . '/../..';
+
 try {
-    ray(evaluateTinkerFile(getenv('TINKERAY_APP_PATH') . '/tinkeray.php'));
+    ray(evaluateTinkerFile($appPath . '/tinkeray.php'));
 } catch (Throwable $t) {
     if ($t instanceof TinkerayOutputException) {
         ray('Nothing to output in [tinkeray.php]!')->orange();

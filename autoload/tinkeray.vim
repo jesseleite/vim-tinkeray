@@ -10,6 +10,10 @@ if exists('g:tinkeray#disable_autocmds') == 0
   let g:tinkeray#disable_autocmds = 0
 endif
 
+if exists('g:tinkeray#run_from_storage') == 0
+  let g:tinkeray#run_from_storage = 0
+endif
+
 
 " ------------------------------------------------------------------------------
 " # Functions
@@ -19,6 +23,10 @@ let s:plugin_path = expand('<sfile>:p:h:h')
 let s:app_path = getcwd()
 
 function! tinkeray#run()
+  if g:tinkeray#run_from_storage
+    silent exec '!cp -r' s:plugin_path . '/bin/tinkeray.php' s:app_path . '/storage/app/tinkeray.php'
+  endif
+
   if isdirectory(s:app_path.'/vendor/spatie/laravel-ray')
     silent exec '!export TINKERAY_APP_PATH="' . s:app_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
   else
@@ -48,4 +56,9 @@ function! tinkeray#register_autocmds()
     autocmd BufEnter tinkeray.php :call tinkeray#open()
     autocmd BufWritePost tinkeray.php :call tinkeray#run()
   augroup END
+endfunction
+
+function! tinkeray#set_sail()
+  let g:tinkeray#run_from_storage = 1
+  let g:tinkeray#tinker_command = './vendor/bin/sail exec -T -u sail laravel.test php artisan tinker storage/app/tinkeray.php'
 endfunction
