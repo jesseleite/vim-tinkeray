@@ -4,6 +4,12 @@ Heavily inspired by the absolutely awesome [Tinkerwell](https://tinkerwell.app/)
 
 ![](example.png)
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [Laravel Sail](#laravel-sail)
+- [Todo](#todo)
+- [Thank You](#thank-you)
+
 ## Installation
 
 1. Install using [vim-plug](https://github.com/junegunn/vim-plug) or similar:
@@ -35,6 +41,16 @@ Heavily inspired by the absolutely awesome [Tinkerwell](https://tinkerwell.app/)
 4. When you save `tinkeray.php`, you should see your returned output in Ray.
 
 5. Order pizza! 🍕 🤘 😎
+
+## Laravel Sail
+
+If you are using Laravel Sail, you will also need to add the following to your vim config:
+
+```vim
+call tinkeray#set_sail()
+```
+
+By default, this will configure Tinkeray to use the default `laravel.test` Docker service setup by Sail. If you have customized this in your docker file, you may pass your service name into the above `set_sail('my-service.test')` function.
 
 ## Todo
 

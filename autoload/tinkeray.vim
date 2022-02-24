@@ -19,9 +19,9 @@ endif
 
 " Sugar to easily set sail ⛵
 function! tinkeray#set_sail(...)
-  let container = a:0 ? a:1 : 'laravel.test'
+  let service = a:0 ? a:1 : 'laravel.test'
   let g:tinkeray#run_from_storage = 1
-  let g:tinkeray#tinker_command = './vendor/bin/sail exec -T -u sail ' . container . ' php artisan tinker storage/app/tinkeray.php'
+  let g:tinkeray#tinker_command = './vendor/bin/sail exec -T -u sail ' . service . ' php artisan tinker storage/app/tinkeray.php'
 endfunction
 
 
