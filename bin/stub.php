@@ -1,3 +1,3 @@
 <?php
 
-return 'tinkeray ready';
+str('tinkeray ready')->upper() . " 💪";
