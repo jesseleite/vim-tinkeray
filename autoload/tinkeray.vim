@@ -36,10 +36,11 @@ function! tinkeray#run()
   if g:tinkeray#run_from_storage
     silent exec '!cp -r' s:plugin_path . '/bin/tinkeray.php' s:app_path . '/storage/app/tinkeray.php'
   endif
-  if isdirectory(s:app_path . '/vendor/spatie/laravel-ray')
+  redir @r
     silent exec '!export TINKERAY_APP_PATH="' . s:app_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
-  else
-    echo 'Cannot find [spatie/laravel-ray] package!'
+  redir END
+  if match(@r, 'Call to undefined function ray\(\)') > -1
+    echo 'Ray is not installed! Please install spatie/ray, spatie/laravel-ray, or spatie/global-ray.'
   endif
 endfunction
 
