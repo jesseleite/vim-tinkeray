@@ -1,6 +1,9 @@
 <?php
 
-class TinkerayOutputException extends Exception {}
+class TinkerayOutputException extends Exception
+{
+    //
+}
 
 function generateAst($filename)
 {
@@ -15,7 +18,7 @@ function removeCommentLines($ast)
 {
     $traverser = new PhpParser\NodeTraverser;
 
-    $traverser->addVisitor(new class () extends PhpParser\NodeVisitorAbstract {
+    $traverser->addVisitor(new class() extends PhpParser\NodeVisitorAbstract {
         public function leaveNode(PhpParser\Node $node)
         {
             if ($node instanceof PhpParser\Node\Stmt\Nop) {
