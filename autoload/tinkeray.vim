@@ -39,7 +39,9 @@ function! tinkeray#run()
   redir @r
     silent exec '!export TINKERAY_APP_PATH="' . s:app_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
   redir END
-  if match(@r, 'Call to undefined function ray\(\)') > -1
+  if match(@r, 'Could not open input file: artisan') > -1
+    echo 'Could not find [artisan] executable! Please run in context of a Laravel application.'
+  elseif match(@r, 'Call to undefined function ray\(\)') > -1
     echo 'Ray is not installed! Please install spatie/ray, spatie/laravel-ray, or spatie/global-ray.'
   endif
 endfunction
