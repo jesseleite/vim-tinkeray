@@ -37,7 +37,12 @@ function! tinkeray#run()
     silent exec '!cp -r' s:plugin_path . '/bin/tinkeray.php' s:app_path . '/storage/app/tinkeray.php'
   endif
   redir @r
-    silent exec '!export TINKERAY_APP_PATH="' . s:app_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
+    if exists("*jobstart")
+      " TODO: on stdout/stderr, capture output for error handling below
+      call jobstart(g:tinkeray#tinker_command . ' ' . s:plugin_path . '/bin/tinkeray.php', {'env': {'TINKERAY_APP_PATH': s:app_path}})
+    else
+      silent exec '!export TINKERAY_APP_PATH="' . s:app_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
+    endif
   redir END
   if match(@r, 'Could not open input file: artisan') > -1
     echo 'Could not find [artisan] executable! Please run in context of a Laravel application.'
