@@ -36,13 +36,20 @@ function! tinkeray#run()
   if g:tinkeray#run_from_storage
     silent exec '!cp -r' s:plugin_path . '/bin/tinkeray.php' s:app_path . '/storage/app/tinkeray.php'
   endif
-  redir @r
-    silent exec '!export TINKERAY_APP_PATH="' . s:app_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
-  redir END
-  if match(@r, 'Could not open input file: artisan') > -1
-    echo 'Could not find [artisan] executable! Please run in context of a Laravel application.'
-  elseif match(@r, 'Call to undefined function ray\(\)') > -1
-    echo 'Ray is not installed! Please install spatie/ray, spatie/laravel-ray, or spatie/global-ray.'
+  if exists("*jobstart")
+    let job = jobstart(g:tinkeray#tinker_command . ' ' . s:plugin_path . '/bin/tinkeray.php', {
+      \ 'env': {'TINKERAY_APP_PATH': s:app_path},
+      \ 'on_stderr': function('s:handle_stderr'),
+      \ 'on_stdout': function('s:handle_stderr'),
+      \ })
+    if job == 1
+      call s:handle_stderr(0, ['Could not open input file: artisan'], 0)
+    endif
+  else
+    redir @r
+      silent exec '!export TINKERAY_APP_PATH="' . s:app_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
+    redir END
+    call s:handle_stderr(0, [@r], 0)
   endif
 endfunction
 
@@ -51,8 +58,13 @@ function! tinkeray#open()
     call tinkeray#create_stub()
   endif
   exec 'edit tinkeray.php'
+endfunction
+
+function! tinkeray#opened()
   call search("'tinkeray ready'")
-  " call tinkeray#run() " TODO: Only auto run on open when running async
+  if exists("*jobstart")
+    call tinkeray#run()
+  endif
 endfunction
 
 function! tinkeray#create_stub()
@@ -66,7 +78,16 @@ function! tinkeray#register_autocmds()
   endif
   augroup tinkeray_autocmds
     autocmd!
-    exec 'autocmd BufEnter' getcwd() . '/tinkeray.php :call tinkeray#open()'
+    exec 'autocmd BufEnter' getcwd() . '/tinkeray.php :call tinkeray#opened()'
     exec 'autocmd BufWritePost' getcwd() . '/tinkeray.php :call tinkeray#run()'
   augroup END
+endfunction
+
+function! s:handle_stderr(channel, data, name)
+  let output = join(a:data)
+  if match(output, 'Could not open input file: artisan') > -1
+    echo 'Could not find [artisan] executable! Please run in context of a Laravel application.'
+  elseif match(output, 'Call to undefined function ray\(\)') > -1
+    echo 'Ray is not installed! Please install spatie/ray, spatie/laravel-ray, or spatie/global-ray.'
+  endif
 endfunction
