@@ -52,10 +52,6 @@ call tinkeray#set_sail()
 
 By default, this will configure Tinkeray to use the default `laravel.test` Docker service setup by Sail. If you have customized this in your docker file, you may pass your service name into the above `set_sail('my-service.test')` function.
 
-## Todo
-
-- Figure out how to run as async job in Neovim
-
 ## Thank You!
 
 - [Spatie](https://spatie.be/) and [BeyondCode](https://beyondco.de/) for rad tooling!
