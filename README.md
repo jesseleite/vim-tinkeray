@@ -18,13 +18,13 @@ Heavily inspired by the absolutely awesome [Tinkerwell](https://tinkerwell.app/)
     Plug 'jesseleite/vim-tinkeray'
     ```
 
-2. Add `tinkeray.php` to your [global git excludes](https://gist.github.com/subfuzion/db7f57fff2fb6998a16c) file.
-
-3. Add Tinkeray's mapping to stub and/or open a blank `tinkeray.php` in your project when you want to tinker:
+2. Add Tinkeray's mapping to stub and/or open a blank `tinkeray.php` in your project when you want to tinker:
 
     ```vim
     nmap <Leader>t <Plug>TinkerayOpen
     ```
+
+3. Optionally add `tinkeray.php` to your [global git excludes](https://gist.github.com/subfuzion/db7f57fff2fb6998a16c), so that you don't have to ignore it in each project.
 
 ## Usage
 
