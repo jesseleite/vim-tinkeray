@@ -28,7 +28,7 @@ Heavily inspired by the absolutely awesome [Tinkerwell](https://tinkerwell.app/)
 
 ## Usage
 
-1. Install Ray into your project:
+1. Install Ray into your project (or check out [spatie/global-ray](https://github.com/spatie/global-ray)):
 
     ```bash
     composer require spatie/laravel-ray
