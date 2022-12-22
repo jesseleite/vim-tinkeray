@@ -56,6 +56,6 @@ By default, this will configure Tinkeray to use the default `laravel.test` Docke
 
 - [Spatie](https://spatie.be/) and [BeyondCode](https://beyondco.de/) for rad tooling!
 
-- [Jose Soto](https://twitter.com/josecanhelp) for contributions, slick ideas, and teamwork!
+- [Jose Soto](https://twitter.com/josecanhelp) for your contributions, slick ideas, and teamwork!
 
     ![](https://media.giphy.com/media/BvsKJXGzqfNPq/giphy.gif)
