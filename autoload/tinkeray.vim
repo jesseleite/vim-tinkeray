@@ -7,6 +7,11 @@ if exists('g:tinkeray#disable_autocmds') == 0
   let g:tinkeray#disable_autocmds = 0
 endif
 
+" Disable only the BufEnter autocmd if you think it's annoying
+if exists('g:tinkeray#disable_bufenter_autocmd') == 0
+  let g:tinkeray#disable_bufenter_autocmd = 0
+endif
+
 " Some environments might require a custom tinker command or path
 if exists('g:tinkeray#tinker_command') == 0
   let g:tinkeray#tinker_command = 'php artisan tinker'
@@ -78,8 +83,10 @@ function! tinkeray#register_autocmds()
   endif
   augroup tinkeray_autocmds
     autocmd!
-    exec 'autocmd BufEnter' getcwd() . '/tinkeray.php :call tinkeray#opened()'
     exec 'autocmd BufWritePost' getcwd() . '/tinkeray.php :call tinkeray#run()'
+    if g:tinkeray#disable_bufenter_autocmd == 0
+      exec 'autocmd BufEnter' getcwd() . '/tinkeray.php :call tinkeray#opened()'
+    endif
   augroup END
 endfunction
 
