@@ -9,7 +9,10 @@ function generateAst($filename)
 {
     $code = file_get_contents($filename);
 
-    $parser = (new PhpParser\ParserFactory)->create(PhpParser\ParserFactory::PREFER_PHP7);
+    // Use `createForHostVersion()`, otherwise fall back to legacy `create()` method which was removed in v5
+    $parser = method_exists('PhpParser\ParserFactory', 'createForHostVersion')
+        ? (new PhpParser\ParserFactory)->createForHostVersion()
+        : (new PhpParser\ParserFactory)->create(PhpParser\ParserFactory::PREFER_PHP7);
 
     return $parser->parse($code);
 }
