@@ -21,7 +21,8 @@ function removeCommentLines($ast)
 {
     $traverser = new PhpParser\NodeTraverser;
 
-    $traverser->addVisitor(new class() extends PhpParser\NodeVisitorAbstract {
+    $traverser->addVisitor(new class() extends PhpParser\NodeVisitorAbstract
+    {
         public function leaveNode(PhpParser\Node $node)
         {
             if ($node instanceof PhpParser\Node\Stmt\Nop) {
@@ -65,10 +66,10 @@ function evaluateTinkerFile($filename)
 }
 
 // Use explicit app path or fall back to storage/app for Laravel Sail
-$appPath = getenv('TINKERAY_APP_PATH') ?: __DIR__ . '/../..';
+$appPath = getenv('TINKERAY_APP_PATH') ?: __DIR__.'/../..';
 
 try {
-    ray(evaluateTinkerFile($appPath . '/tinkeray.php'));
+    ray(evaluateTinkerFile($appPath.'/tinkeray.php'));
 } catch (Throwable $t) {
     if ($t instanceof TinkerayOutputException) {
         ray('Nothing to output in [tinkeray.php]!')->orange();
