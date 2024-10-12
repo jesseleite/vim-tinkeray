@@ -84,9 +84,9 @@ function! tinkeray#register_autocmds()
   endif
   augroup tinkeray_autocmds
     autocmd!
-    exec 'autocmd BufWritePost' getcwd() . '/tinkeray.php :call tinkeray#run()'
+    exec 'autocmd BufWritePost' getcwd() . '/tinkeray*.php :call tinkeray#run()'
     if g:tinkeray#disable_bufenter_autocmd == 0
-      exec 'autocmd BufEnter' getcwd() . '/tinkeray.php :call tinkeray#opened()'
+      exec 'autocmd BufEnter' getcwd() . '/tinkeray*.php :call tinkeray#opened()'
     endif
   augroup END
 endfunction
