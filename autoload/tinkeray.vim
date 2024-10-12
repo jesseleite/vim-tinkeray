@@ -41,9 +41,10 @@ function! tinkeray#run()
   if g:tinkeray#run_from_storage
     silent exec '!cp -r' s:plugin_path . '/bin/tinkeray.php' s:app_path . '/storage/app/tinkeray.php'
   endif
+  let tinkeray_scratch_file_path = s:app_path . '/' . expand('%:t')
   if exists("*jobstart")
     let job = jobstart(g:tinkeray#tinker_command . ' ' . s:plugin_path . '/bin/tinkeray.php', {
-      \ 'env': {'TINKERAY_APP_PATH': s:app_path},
+      \ 'env': {'TINKERAY_SCRATCH_FILE_PATH': tinkeray_scratch_file_path},
       \ 'on_stderr': function('s:handle_stderr'),
       \ 'on_stdout': function('s:handle_stderr'),
       \ })
@@ -52,7 +53,7 @@ function! tinkeray#run()
     endif
   else
     redir @r
-      silent exec '!export TINKERAY_APP_PATH="' . s:app_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
+      silent exec '!export TINKERAY_SCRATCH_FILE_PATH="' . tinkeray_scratch_file_path . '" &&' g:tinkeray#tinker_command s:plugin_path . '/bin/tinkeray.php'
     redir END
     call s:handle_stderr(0, [@r], 0)
   endif

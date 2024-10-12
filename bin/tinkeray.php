@@ -21,7 +21,7 @@ function removeCommentLines($ast)
 {
     $traverser = new PhpParser\NodeTraverser;
 
-    $traverser->addVisitor(new class() extends PhpParser\NodeVisitorAbstract
+    $traverser->addVisitor(new class extends PhpParser\NodeVisitorAbstract
     {
         public function leaveNode(PhpParser\Node $node)
         {
@@ -66,13 +66,14 @@ function evaluateTinkerFile($filename)
 }
 
 // Use explicit app path or fall back to storage/app for Laravel Sail
-$appPath = getenv('TINKERAY_APP_PATH') ?: __DIR__.'/../..';
+$scratchFilePath = getenv('TINKERAY_SCRATCH_FILE_PATH')
+    ?: __DIR__.'/../../tinkeray.php'; // TODO: <-- How to make multiple scratch files still work in Laravel Sail?
 
 try {
-    ray(evaluateTinkerFile($appPath.'/tinkeray.php'));
+    ray(evaluateTinkerFile($scratchFilePath));
 } catch (Throwable $t) {
     if ($t instanceof TinkerayOutputException) {
-        ray('Nothing to output in [tinkeray.php]!')->orange();
+        ray('Nothing to output in ['.pathinfo($scratchFilePath)['basename'].']!')->orange();
     } else {
         ray()->exception($t);
     }
